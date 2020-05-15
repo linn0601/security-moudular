@@ -3,6 +3,7 @@ package org.linn.filter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Date;
 
@@ -23,9 +24,11 @@ public class TimeFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        long start = new Date().getTime();
-        filterChain.doFilter(request, response);
-        long end = new Date().getTime();
-        log.info("结束 : " + (end - start));
+        HttpServletRequest http = (HttpServletRequest)request;
+
+        System.out.println(http.getRequestURL().toString().endsWith("ico"));
+        if (!http.getRequestURL().toString().endsWith("ico")){
+            filterChain.doFilter(request, response);
+        }
     }
 }

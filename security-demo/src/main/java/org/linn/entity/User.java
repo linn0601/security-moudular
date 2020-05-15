@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
-import java.util.stream.LongStream;
 
 @Data
 public class User {

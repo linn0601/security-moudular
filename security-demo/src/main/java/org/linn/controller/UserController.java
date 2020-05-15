@@ -6,7 +6,14 @@ import org.linn.exception.CustomException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +44,32 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<User> getUser(@Validated @RequestBody User user) {
-        System.out.println(user);
+       // System.out.println(user);
        /* if (true){
             throw new RuntimeException("111");
         }*/
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/upload")
+    public void updateLoad(MultipartFile file) throws IOException {
+        String folder = "D:" + File.separator + "floder" + File.separator + file.getOriginalFilename();
+        try (
+                FileOutputStream out = new FileOutputStream(new File(folder));
+                FileInputStream in = (FileInputStream) file.getInputStream()
+        ) {
+            FileChannel inChannel = in.getChannel();
+            FileChannel outChannel = out.getChannel();
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            while (inChannel.read(buffer) != -1) {
+                buffer.flip();
+                outChannel.write(buffer);
+                buffer.clear();
+            }
+            inChannel.close();
+            outChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
