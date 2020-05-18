@@ -34,6 +34,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        validateCodeFilter.afterPropertiesSet();
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin().loginPage("/authentication/require").loginProcessingUrl("/authentication/login")
                 .successHandler(successHandler)

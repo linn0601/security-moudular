@@ -14,10 +14,17 @@ import java.time.LocalDateTime;
 @Getter
 public class ImageCode {
 
+    /**
+     * 验证码
+     */
     private BufferedImage image;
-
+    /**
+     * 字符串验证码
+     */
     private String code;
-
+    /**
+     * 过期时间
+     */
     private LocalDateTime expireTime;
 
     public ImageCode(BufferedImage image, String code, int expireIn){

@@ -21,3 +21,13 @@ spring:
 #  security:
 #    browser:
 #      loginType: REDIRECT
+custom:
+  security:
+    code:
+      image:
+        length: 6
+        url: /user/*
+
+
+
+
