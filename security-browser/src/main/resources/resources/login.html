@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登 录</title>
+</head>
+<body>
+<form action="/authentication/login" method="post">
+    <table>
+        <tr>
+            <td>
+                <label>用戶名：
+                    <input type="text" name="username">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>密 碼:
+                    <input type="password" name="password">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>图形验证码:
+                    <input type="text" name="imageCode">
+                    <img src="/code/image" alt="接口错误">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">登錄</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

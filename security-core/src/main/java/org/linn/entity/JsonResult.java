@@ -1,4 +1,4 @@
-package org.linn.bean;
+package org.linn.entity;
 
 import java.util.HashMap;
 

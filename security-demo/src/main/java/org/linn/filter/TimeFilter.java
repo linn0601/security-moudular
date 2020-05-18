@@ -26,7 +26,7 @@ public class TimeFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest http = (HttpServletRequest)request;
 
-        System.out.println(http.getRequestURL().toString().endsWith("ico"));
+        //message.out.println(http.getRequestURL().toString().endsWith("ico"));
         if (!http.getRequestURL().toString().endsWith("ico")){
             filterChain.doFilter(request, response);
         }

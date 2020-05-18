@@ -11,3 +11,13 @@ spring:
     password: root
     username: root
     type: com.zaxxer.hikari.HikariDataSource
+
+
+#custom:
+#  security:
+#    browser:
+#      loginPage: /demo.html
+#custom:
+#  security:
+#    browser:
+#      loginType: REDIRECT

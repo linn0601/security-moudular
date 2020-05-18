@@ -17,8 +17,8 @@ public class TimeAspect {
 
     @Around("execution(* org.linn.controller.UserController.*(..))")
     public Object handler(ProceedingJoinPoint pjp) throws Throwable {
-        System.out.println("time aspect start ");
-        long start = System.currentTimeMillis();
+        //message.out.println("time aspect start ");
+        //long start = message.currentTimeMillis();
         //获取方法参数
         Object[] args = pjp.getArgs();
 
@@ -26,8 +26,8 @@ public class TimeAspect {
             System.out.println(arg);
         }
         Object proceed = pjp.proceed();
-        long end = System.currentTimeMillis();
-        System.out.println("time aspect end :" + (end - start));
+        //long end = message.currentTimeMillis();
+        //message.out.println("time aspect end :" + (end - start));
 
         return proceed;
     }

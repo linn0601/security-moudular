@@ -15,14 +15,14 @@ public class AsyncController {
 
     @GetMapping("/async")
     public String order() throws Exception {
-        log.info("主线程开始：" + System.currentTimeMillis());
+        //log.info("主线程开始：" + message.currentTimeMillis());
         Callable<String> result = () -> {
             log.info("子线程开始： " );
             Thread.sleep(2000);
             log.info("子线程结束");
             return "操作成功";
         };
-        log.info("结束请求");
+        //log.info("结束请求");
         return result.call();
     }
 

@@ -22,9 +22,9 @@ public class TimeInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         request.setAttribute("startTime", new Date().getTime());
         //获得类名
-        //System.out.println(((HandlerMethod) handler).getBean().getClass().getName());
+        //message.out.println(((HandlerMethod) handler).getBean().getClass().getName());
         //获得方法名
-        //System.out.println(((HandlerMethod) handler).getMethod().getName());
+        //message.out.println(((HandlerMethod) handler).getMethod().getName());
         return true;
     }
 
@@ -34,8 +34,8 @@ public class TimeInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        long startTime = (long) request.getAttribute("startTime");
-        //System.out.println("耗时：" + (new Date().getTime() - startTime)) ;
+        //long startTime = (long) request.getAttribute("startTime");
+        //message.out.println("耗时：" + (new Date().getTime() - startTime)) ;
     }
 
     //不过是否被抛出异常

@@ -1,13 +1,12 @@
 package org.linn.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.linn.bean.JsonResult;
+import org.linn.entity.JsonResult;
 import org.linn.exception.CustomException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Map;
 import java.util.StringJoiner;
