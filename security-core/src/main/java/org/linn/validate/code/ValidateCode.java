@@ -5,21 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-public class ImageCode {
+public class ValidateCode {
 
     /**
-     * 验证码
-     */
-    private BufferedImage image;
-    /**
-     * 字符串验证码
+     * 短信验证码
      */
     private String code;
     /**
@@ -27,8 +22,7 @@ public class ImageCode {
      */
     private LocalDateTime expireTime;
 
-    public ImageCode(BufferedImage image, String code, int expireIn){
-        this.image = image;
+    public ValidateCode(String code, int expireIn){
         this.code = code;
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }

@@ -17,4 +17,9 @@ public class BrowserProperties {
      */
     private LoginType loginType = LoginType.JSON;
 
+    /**
+     * 记住我的过期时间
+     */
+    private int rememberSecond = 360000;
+
 }

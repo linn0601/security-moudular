@@ -1,18 +1,23 @@
-package org.linn.validate.code;
+package org.linn.validate.code.image;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.linn.properties.SecurityProperties;
+import org.linn.validate.code.ValidateCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Setter
+@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ImageCodeGenerator implements ValidateCodeGenerator {
 
     private final SecurityProperties securityProperties;
 
     @Override
-    public ImageCode createImageCode() {
+    public ImageCode generate() {
         CircleCaptcha circleCaptcha = CaptchaUtil.createCircleCaptcha(
                 securityProperties.getCode().getImage().getWidth(),
                 securityProperties.getCode().getImage().getHeight(),

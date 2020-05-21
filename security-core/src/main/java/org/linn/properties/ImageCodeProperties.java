@@ -5,7 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ImageCodeProperties {
+public class ImageCodeProperties extends SmsCodeProperties {
+
+    public ImageCodeProperties() {
+        this.setLength(4);
+    }
 
     /**
      * 验证码宽度
@@ -15,10 +19,6 @@ public class ImageCodeProperties {
      * 验证码高度
      */
     private int height = 23;
-    /**
-     * 验证码长度
-     */
-    private int length = 4;
     /**
      * 有效时间
      */

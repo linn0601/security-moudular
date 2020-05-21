@@ -5,6 +5,7 @@
     <title>登 录</title>
 </head>
 <body>
+<h2>验证码登录</h2>
 <form action="/authentication/login" method="post">
     <table>
         <tr>
@@ -16,9 +17,7 @@
         </tr>
         <tr>
             <td>
-                <label>密 碼:
-                    <input type="password" name="password">
-                </label>
+                <label>密 碼:<input type="password" name="password"></label>
             </td>
         </tr>
         <tr>
@@ -26,6 +25,38 @@
                 <label>图形验证码:
                     <input type="text" name="imageCode">
                     <img src="/code/image" alt="接口错误">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label>记住我
+                    <input type="checkbox" name="remember-me" value="true">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">登錄</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<h2>短信登录</h2>
+<form action="/authentication/mobile" method="post">
+    <table>
+        <tr>
+            <td>
+                <label>手机号：
+                    <input type="text" name="username" value="13077215486">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>短信验证码:
+                    <input type="text" name="smsCode">
+                    <a href="/code/sms?mobile=13077215486">发送验证码</a>
                 </label>
             </td>
         </tr>

@@ -6,7 +6,7 @@ spring:
     name: spring-security
 
   datasource:
-    url: jdbc:mysql://47.98.60.41:3306/user_center?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://47.98.60.41:3306/security?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
     username: root
@@ -21,12 +21,12 @@ spring:
 #  security:
 #    browser:
 #      loginType: REDIRECT
-custom:
-  security:
-    code:
-      image:
-        length: 6
-        url: /user/*
+#custom:
+#  security:
+#    code:
+#      image:
+#        length: 6
+#        url: /user/*
 
 
 

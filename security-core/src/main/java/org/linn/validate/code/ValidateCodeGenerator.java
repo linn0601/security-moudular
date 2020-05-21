@@ -2,5 +2,5 @@ package org.linn.validate.code;
 
 public interface ValidateCodeGenerator {
 
-    ImageCode createImageCode();
+    ValidateCode generate();
 }
