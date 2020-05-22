@@ -24,7 +24,8 @@ public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         SmsCodeAuthenticationToken smsCodeAuthenticationToken = (SmsCodeAuthenticationToken)authentication;
-        UserDetails user = userDetailsService.loadUserByUsername((String) smsCodeAuthenticationToken.getPrincipal());
+        String principal = (String) smsCodeAuthenticationToken.getPrincipal();
+        UserDetails user = userDetailsService.loadUserByUsername(principal);
         Optional.ofNullable(user).orElseThrow(() ->
                 new InternalAuthenticationServiceException("无法获取用户信息"));
 
@@ -36,7 +37,7 @@ public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
                 user.getAuthorities());
         //Copy before userDetails
         authenticationResult.setDetails(smsCodeAuthenticationToken.getDetails());
-        return null;
+        return authenticationResult;
     }
 
     @Override

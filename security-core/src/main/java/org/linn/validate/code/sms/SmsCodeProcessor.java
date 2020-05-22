@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
-@Component
+/**
+ * 发送逻辑的具体调用
+ */
+@Component("smsValidateCodeProcessor")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SmsCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode> {
 

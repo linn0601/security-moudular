@@ -1,7 +1,6 @@
-package org.linn.controller;
+package org.linn.validate.code;
 
 import lombok.RequiredArgsConstructor;
-import org.linn.validate.code.ValidateCodeProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,17 +9,24 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ValidateCodeController {
 
-    private final Map<String, ValidateCodeProcessor> validateCodeProcessors;
+    private final ValidateCodeProcessorHolder validateCodeProcessorHolder;
 
+    /**
+     * 控制层| 根据前端请求返回
+     * @param type 验证码的类型
+     * 默认实现如下
+     * @see org.linn.constants.SecurityConstants
+     * 定制化配置实现如下
+     * @see ValidateCodeType
+     */
     @GetMapping("/code/{type}")
     public void createCode(@PathVariable String type, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        validateCodeProcessors.get(type + "CodeProcessor").create(new ServletWebRequest(request, response));
+        validateCodeProcessorHolder.findValidateCodeProcessor(type).create(new ServletWebRequest(request, response));
     }
 
 }

@@ -2,13 +2,17 @@ package org.linn.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.linn.constants.SecurityConstants;
 
 @Setter
 @Getter
 public class BrowserProperties {
 
-    //登录页面
-    private String loginPage = "/login.html";
+    //默认登录页面
+    private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
+
+    //默认注册页面
+    private String registerPage = SecurityConstants.DEFAULT_REGISTER_PAGE_URL;
 
     /**
      * 数据类型

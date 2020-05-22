@@ -10,6 +10,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 一个关于短信和图形验证码Bean的配置，提供重写逻辑途径
+ * {@link ValidateCodeGenerator} 关于图形验证码的实现
+ * {@link SmsCodeSender} 关于短信验证码的实现
+ */
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ValidateCodeBeanConfig {

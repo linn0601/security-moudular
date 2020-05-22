@@ -8,16 +8,21 @@ import org.linn.properties.SecurityProperties;
 import org.linn.validate.code.ValidateCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.ServletWebRequest;
 
 @Setter
-@Component
+@Component("imageValidateCodeGenerator")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ImageCodeGenerator implements ValidateCodeGenerator {
 
     private final SecurityProperties securityProperties;
 
+    /**
+     * 图形验证码的生辰
+     * @return {@link ImageCode } 验证码的封装
+     */
     @Override
-    public ImageCode generate() {
+    public ImageCode generate(ServletWebRequest request) {
         CircleCaptcha circleCaptcha = CaptchaUtil.createCircleCaptcha(
                 securityProperties.getCode().getImage().getWidth(),
                 securityProperties.getCode().getImage().getHeight(),
