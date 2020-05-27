@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.linn.authentication.AbstractChannelSecurityConfig;
 import org.linn.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import org.linn.properties.SecurityProperties;
-import org.linn.validate.code.ValidateCodeFilter;
 import org.linn.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +30,6 @@ import static org.linn.constants.SecurityConstants.*;
 public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
     private final SecurityProperties securityProperties;
-    private final ValidateCodeFilter validateCodeFilter;
 
     private final DataSource dataSource;
     private final UserDetailsService userDetailsService;
@@ -57,6 +55,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .and()
                 .rememberMe().tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberSecond()).userDetailsService(userDetailsService)
+                .and()
+                .sessionManagement().invalidSessionUrl("/session/invalid")
                 .and()
                 .authorizeRequests()
                 .antMatchers(

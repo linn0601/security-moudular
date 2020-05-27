@@ -15,7 +15,7 @@ public class SecurityConstants {
     /**
      * 默认用户名密码登录处理url
      */
-    public static final String DEFAULT_LOGIN_PROCESSING_URL_FORM = "/authentication/form";
+    public static final String DEFAULT_LOGIN_PROCESSING_URL_FORM = "/authentication/from";
 
     /**
      * 默认收集登录处理url

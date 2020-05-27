@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,7 +30,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
      * 验证失败处理器
      */
     private final AuthenticationFailureHandler authenticationFailureHandler;
-    private final Set<String> url = new HashSet<>();
     /**
      * 系统配置信息
      */
@@ -87,7 +85,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         //获取请求校验的类型
         ValidateCodeType type = getValidateCodeType(request);
 
-        if (url.stream().anyMatch(a -> antPathMatcher.match(a, request.getRequestURI()))) {
+        if (type != null) {
+            log.info("校验请求(" + request.getRequestURI() + ")中的验证码,验证码类型" + type);
             try {
                 validateCodeProcessorHolder.findValidateCodeProcessor(type);
                 log.info("验证码校验通过");
@@ -103,16 +102,18 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
     /**
      * 获取校验码的类型 IMAGE | SMS {@link ValidateCodeType}
+     *
      * @param request 当前请求
      * @return IMAGE | SMS {@link ValidateCodeType}
      */
     private ValidateCodeType getValidateCodeType(HttpServletRequest request) {
         ValidateCodeType result = null;
-        if (StringUtils.equalsIgnoreCase(request.getMethod(), "GET")) {
+        if (!StringUtils.equalsIgnoreCase(request.getMethod(), "GET")) {
             Set<String> urls = urlMap.keySet();
             for (String url : urls) {
-                antPathMatcher.match(url, request.getRequestURI());
-                result = urlMap.get(url);
+                if (antPathMatcher.match(url, request.getRequestURI())) {
+                    result = urlMap.get(url);
+                }
             }
         }
         return result;

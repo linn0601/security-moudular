@@ -32,7 +32,8 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
      * 保存验证码
      */
     private void save(ServletWebRequest request, T validateCode) {
-        httpSession.setAttribute(this.getSessionKey(request), validateCode);
+        ValidateCode code = new ValidateCode(validateCode.getCode(),validateCode.getExpireTime());
+        httpSession.setAttribute(this.getSessionKey(request), code);
     }
 
     /**
