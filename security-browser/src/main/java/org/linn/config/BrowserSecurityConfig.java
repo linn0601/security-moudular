@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
@@ -47,6 +48,7 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
      */
     private final SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
     private final InvalidSessionStrategy invalidSessionStrategy;
+    private final LogoutSuccessHandler logoutSuccessHandler;
 
     /**
      * 用来配置HttpSecurity
@@ -74,6 +76,10 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 //当超过最大值时，禁止登录
                 .maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().isMaxSessionsPreventsLogin())
                 .and()
+                .and()
+                .logout()
+                    .logoutSuccessHandler(logoutSuccessHandler)
+                    .deleteCookies("JSESSIONID")
                 .and()
                 .authorizeRequests()
                 .antMatchers(

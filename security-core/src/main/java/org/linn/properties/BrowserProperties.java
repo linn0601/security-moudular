@@ -8,6 +8,7 @@ import org.linn.constants.SecurityConstants;
 @Getter
 public class BrowserProperties {
 
+    private String loginOutUrl;
     /**
      * 默认登录页面
      */
