@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
 import javax.sql.DataSource;
 
@@ -41,6 +43,12 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     private final ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
     /**
+     * 并发登录策略
+     */
+    private final SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
+    private final InvalidSessionStrategy invalidSessionStrategy;
+
+    /**
      * 用来配置HttpSecurity
      */
     @Override
@@ -54,9 +62,18 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
                 .rememberMe().tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(securityProperties.getBrowser().getRememberSecond()).userDetailsService(userDetailsService)
+                .tokenValiditySeconds(securityProperties.getBrowser().getRememberSecond())
+                .userDetailsService(userDetailsService)
                 .and()
-                .sessionManagement().invalidSessionUrl("/session/invalid")
+                .sessionManagement()
+                .invalidSessionStrategy(invalidSessionStrategy)
+                //.invalidSessionUrl(securityProperties.getBrowser().getSession().getSessionInvalidUrl())
+                //设置session会话最大值，并执行超过策略
+                .maximumSessions(securityProperties.getBrowser().getSession().getMaximumSessions())
+                .expiredSessionStrategy(sessionInformationExpiredStrategy)
+                //当超过最大值时，禁止登录
+                .maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().isMaxSessionsPreventsLogin())
+                .and()
                 .and()
                 .authorizeRequests()
                 .antMatchers(
@@ -64,7 +81,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
                         DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
                         securityProperties.getBrowser().getLoginPage(),
-                        securityProperties.getBrowser().getRegisterPage()
+                        securityProperties.getBrowser().getRegisterPage(),
+                        securityProperties.getBrowser().getSession().getSessionInvalidUrl()
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()

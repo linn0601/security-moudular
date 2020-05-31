@@ -27,7 +27,10 @@ public class ValidateCode implements Serializable {
         this.code = code;
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }
-    //判断验证码是否过期
+
+    /**
+     * 判断验证码是否过期
+     */
     public boolean isExpire(){
         return LocalDateTime.now().isAfter(this.expireTime);
     }

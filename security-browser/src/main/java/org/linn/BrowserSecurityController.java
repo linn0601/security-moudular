@@ -49,7 +49,7 @@ public class BrowserSecurityController {
     }
 
 
-    @GetMapping("session/invalid")
+    @GetMapping("/session/invalid")
     public ResponseEntity<Map<String, String>> sessionInvalid() {
         String message = "session 失效";
         return new ResponseEntity<Map<String, String>>(new HashMap<String, String>() {

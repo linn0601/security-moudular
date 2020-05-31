@@ -1,8 +1,8 @@
 server:
-  port: 8081
+  port: 8083
   servlet:
     session:
-      timeout: 1
+      timeout: 60
 
 spring:
   application:
@@ -14,12 +14,12 @@ spring:
     password: root
     username: root
     type: com.zaxxer.hikari.HikariDataSource
-  session:
-    store-type: redis
   redis:
-    host: 47.98.60.41
     port: 6379
     password: root
+    host: 47.98.60.41
+  session:
+    store-type: redis
 
 #custom:
 #  security:

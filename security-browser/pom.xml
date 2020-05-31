@@ -17,6 +17,10 @@
             <artifactId>security-core</artifactId>
             <version>${security-modular-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
