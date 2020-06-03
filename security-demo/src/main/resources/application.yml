@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8080
   servlet:
     session:
       timeout: 60
@@ -20,6 +20,13 @@ spring:
     host: 47.98.60.41
   session:
     store-type: redis
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: test
+#      client-secret: test1234
+#      scope: all
 
 #custom:
 #  security:

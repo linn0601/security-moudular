@@ -12,9 +12,14 @@
     <artifactId>security-demo</artifactId>
 
     <dependencies>
-        <dependency>
+       <!-- <dependency>
             <groupId>org.linn</groupId>
             <artifactId>security-browser</artifactId>
+            <version>${security-modular-version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.linn</groupId>
+            <artifactId>security-app</artifactId>
             <version>${security-modular-version}</version>
         </dependency>
         <!-- AOP依赖 -->

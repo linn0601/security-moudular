@@ -3,23 +3,21 @@ package org.linn.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.linn.entity.User;
 import org.linn.exception.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.plugin.liveconnect.SecurityContextHelper;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<User> getUser(@Validated @RequestBody User user) {
-       // message.out.println(user);
+        // message.out.println(user);
        /* if (true){
             throw new RuntimeException("111");
         }*/
@@ -80,13 +78,17 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public Object getCurrentUser(Authentication authentication){
+    public Object getCurrentUser(Authentication authentication) {
         return authentication;
     }
 
     @GetMapping("/mee")
-    public Object getCurrentUsers(@AuthenticationPrincipal UserDetails user){
+    public Object getCurrentUsers(@AuthenticationPrincipal UserDetails user) {
         return user;
     }
 
+    @GetMapping("/hello")
+    public String hello(Principal principal) {
+        return "hello" + principal.getName();
+    }
 }
