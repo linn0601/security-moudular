@@ -46,9 +46,8 @@ public class AbstractSessionStrategy {
     /*
      * (non-Javadoc)
      *
-     * @see org.springframework.security.web.session.InvalidSessionStrategy#
-     * onInvalidSessionDetected(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)
+     * @see org.springframework.security.web.session.SimpleRedirectInvalidSessionStrategy.onInvalidSessionDetected
+     * javax.servlet.http.HttpServletResponse
      */
     protected void onSessionInvalid(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (createNewSession) {

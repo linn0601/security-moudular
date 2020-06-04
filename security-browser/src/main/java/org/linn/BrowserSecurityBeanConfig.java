@@ -1,5 +1,6 @@
 package org.linn;
 
+import lombok.RequiredArgsConstructor;
 import org.linn.logout.CustomLogoutSuccessHandler;
 import org.linn.properties.SecurityProperties;
 import org.linn.session.CustomExpiredSessionStrategy;
@@ -14,10 +15,10 @@ import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
 @Configuration
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BrowserSecurityBeanConfig {
 
-    @Autowired
-    private SecurityProperties securityProperties;
+    private final SecurityProperties securityProperties;
 
     @Bean
     @ConditionalOnMissingBean(InvalidSessionStrategy.class)

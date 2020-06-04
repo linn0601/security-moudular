@@ -1,7 +1,6 @@
 package org.linn.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.linn.entity.JsonResult;
 import org.linn.properties.LoginType;
 import org.linn.properties.SecurityProperties;
@@ -20,10 +19,10 @@ import java.io.IOException;
  * 失败处理器
  */
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-    
-    private final SecurityProperties securityProperties;
+
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -32,7 +31,7 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.setContentType("application/ json;charset=UTF-8");
+            response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(JsonResult.error(401, e.getMessage())));
         } else {
             super.onAuthenticationFailure(request, response, e);

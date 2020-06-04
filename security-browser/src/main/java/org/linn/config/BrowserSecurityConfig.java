@@ -33,8 +33,7 @@ import static org.linn.constants.SecurityConstants.*;
 public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
     private final SecurityProperties securityProperties;
-
-    private final DataSource dataSource;
+    private final  DataSource dataSource;
     private final UserDetailsService userDetailsService;
 
     /**

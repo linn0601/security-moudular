@@ -2,11 +2,8 @@ package org.linn.authentication;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.linn.properties.LoginType;
 import org.linn.properties.SecurityProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -18,11 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(CustomSuccessHandler.class);
-    private final SecurityProperties securityProperties;
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @Autowired
     private ObjectMapper objectMapper;

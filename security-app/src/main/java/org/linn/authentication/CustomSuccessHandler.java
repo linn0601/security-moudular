@@ -47,12 +47,12 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info(" 登录成功! ");
+        log.info(" 校验通过,登录成功! ");
+        //对请求进行封装成 UsernamePasswordAuthenticationToken对象
         UsernamePasswordAuthenticationToken authRequest = authenticationConverter.convert(request);
         if (null == authRequest) {
             throw new UnapprovedClientAuthenticationException("请求头中无Client信息");
         }
-
         String clientId =  authRequest.getPrincipal().toString();
         String clientSecurity = authRequest.getCredentials().toString();
 
@@ -63,7 +63,6 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
         } else if (!passwordEncoder.matches(clientSecurity,clientDetails.getClientSecret())) {
             throw new UnapprovedClientAuthenticationException("ClientSecurity不匹配");
         }
-
         TokenRequest tokenRequest = new TokenRequest(MapUtils.EMPTY_MAP, clientId, clientDetails.getScope(), "custom");
 
         OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);

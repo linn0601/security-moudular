@@ -7,7 +7,6 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,8 +17,9 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
      */
     @Autowired
     private Map<String, ValidateCodeGenerator> validateCodeGenerators;
+
     @Autowired
-    private HttpSession httpSession;
+    private ValidateCodeRepository validateCodeRepository;
 
     @Override
     public void create(ServletWebRequest request) throws Exception {
@@ -32,8 +32,9 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
      * 保存验证码
      */
     private void save(ServletWebRequest request, T validateCode) {
-        ValidateCode code = new ValidateCode(validateCode.getCode(),validateCode.getExpireTime());
-        httpSession.setAttribute(this.getSessionKey(request), code);
+        ValidateCode code = new ValidateCode(validateCode.getCode(), validateCode.getExpireTime());
+        validateCodeRepository.save(request, code, this.getValidateCodeType(request));
+        //httpSession.setAttribute(this.getSessionKey(request), code);
     }
 
     /**
@@ -67,16 +68,6 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
     }
 
     /**
-     * 构建验证码放入session时的key
-     *
-     * @param request {@link ServletWebRequest}
-     * @return
-     */
-    private String getSessionKey(ServletWebRequest request) {
-        return SESSION_KEY_PREFIX + getValidateCodeType(request).toString().toUpperCase();
-    }
-
-    /**
      * 验证码校验
      *
      * @param request {@link ServletWebRequest }这是Spring提供的一个工具类，包装着request 和 response
@@ -85,14 +76,15 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
     @Override
     public void validate(ServletWebRequest request) throws ServletRequestBindingException {
         //枚举类中定义抽象方法，
-        ValidateCodeType processorType = getValidateCodeType(request);
-        System.out.println(ValidateCodeProcessor.SESSION_KEY_PREFIX + processorType);
+        ValidateCodeType codeType = getValidateCodeType(request);
+        //System.out.println(ValidateCodeProcessor.SESSION_KEY_PREFIX + processorType);
         // ===========================>>
-        String key = this.getSessionKey(request);
-        T codeInSession = (T) httpSession.getAttribute(key);
+        //String key = this.getSessionKey(request);
+        //T codeInSession = (T) httpSession.getAttribute(key);
+        T codeInSession = (T) validateCodeRepository.get(request, codeType);
         String codeInRequest;
         try {
-            codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), processorType.getParamNameOnValidate());
+            codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), codeType.getParamNameOnValidate());
         } catch (ServletRequestBindingException e) {
             throw new ValidateCodeException("获取短信验证码失败！");
         }
@@ -103,13 +95,15 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
             throw new ValidateCodeException("验证码不存在");
         }
         if (codeInSession.isExpire()) {
-            httpSession.removeAttribute(key);
+            //httpSession.removeAttribute(key);
+            validateCodeRepository.remove(request, codeType);
             throw new ValidateCodeException("验证码已过期");
         }
         if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
             throw new ValidateCodeException("验证码不匹配");
         }
-        httpSession.removeAttribute(key);
+        //httpSession.removeAttribute(key);
+        validateCodeRepository.remove(request, codeType);
     }
 
 
