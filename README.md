@@ -1,10 +1,10 @@
 # security-moudular
 多模块应用，基于security为web端和app提供可重用的安全中心
 
-security-app 提供json作为交互的接口(前后端分离)
-security-browser 提供给浏览器使用(基于重定向跳转)
-security-core 提供给app、browser通用的功能组件
-security-demo 提供测试
+## security-app 提供json作为交互的接口(前后端分离)
+## security-browser 提供给浏览器使用(基于重定向跳转)
+## security-core 提供给app、browser通用的功能组件
+## security-demo 提供测试
 
 1.使用StringUtils 对字符串操作效率会较高
 2.spring提供对HttpServletRequest 和HttpServletResponse的封装类 ServletWebRequest类
