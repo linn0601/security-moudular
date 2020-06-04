@@ -1,5 +1,11 @@
 # security-moudular
 多模块应用，基于security为web端和app提供可重用的安全中心
+```
+接口文档 : https://www.showdoc.cc/linn0601security?page_id=4625568719093193
+
+账号随意 列如: admin
+密码: 123456
+```
 
 ## security-app 提供json作为交互的接口(前后端分离)
 ## security-browser 提供给浏览器使用(基于重定向跳转)
@@ -20,3 +26,4 @@
 7.ServletRequestUtils.getRequiredStringParameter工具类可以从请求参数中查找，如果没有找到就抛出异常    
 
 8.security-core 对验证码 图片|手机验证 进行分层封装系统可能发生的变化。
+
