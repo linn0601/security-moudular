@@ -1,4 +1,4 @@
-package org.linn.validate.code;
+package org.linn.authentication.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

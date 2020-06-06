@@ -2,7 +2,7 @@ package org.linn.validate.code.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.linn.validate.code.ValidateCode;
-import org.linn.validate.code.ValidateCodeException;
+import org.linn.authentication.exception.ValidateCodeException;
 import org.linn.validate.code.ValidateCodeRepository;
 import org.linn.validate.code.ValidateCodeType;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -24,7 +24,7 @@ public class ValidateCodeController {
      * 定制化配置实现如下
      * @see ValidateCodeType
      *
-     * 在请求头中加入 deviceId
+     * 验证码请求需要在请求头中加入 deviceId
      */
     @GetMapping("/code/{type}")
     public void createCode(@PathVariable String type, HttpServletRequest request, HttpServletResponse response) throws Exception {

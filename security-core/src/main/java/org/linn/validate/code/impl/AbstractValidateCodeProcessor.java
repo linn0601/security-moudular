@@ -1,6 +1,7 @@
 package org.linn.validate.code.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.linn.authentication.exception.ValidateCodeException;
 import org.linn.validate.code.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -77,8 +78,6 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
     public void validate(ServletWebRequest request) throws ServletRequestBindingException {
         //枚举类中定义抽象方法，
         ValidateCodeType codeType = getValidateCodeType(request);
-        //System.out.println(ValidateCodeProcessor.SESSION_KEY_PREFIX + processorType);
-        // ===========================>>
         //String key = this.getSessionKey(request);
         //T codeInSession = (T) httpSession.getAttribute(key);
         T codeInSession = (T) validateCodeRepository.get(request, codeType);

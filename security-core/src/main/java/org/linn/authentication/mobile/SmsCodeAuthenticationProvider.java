@@ -11,27 +11,29 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Optional;
 
+/**
+ * 进行身份认证
+ */
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
+
     /**
-     * 进行身份认证逻辑
+     * (non-Javadoc)
+     *
      * @param authentication 封装的用户信息对象 {@link SmsCodeAuthenticationToken }
-     * @return 认证成功返回 {@link Authentication} 的封装
-     * @throws AuthenticationException 认证失败时抛出的异常
+     * @see AuthenticationProvider#authenticate(org.springframework.security.core.Authentication)
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        SmsCodeAuthenticationToken smsCodeAuthenticationToken = (SmsCodeAuthenticationToken)authentication;
+        SmsCodeAuthenticationToken smsCodeAuthenticationToken = (SmsCodeAuthenticationToken) authentication;
         String principal = (String) smsCodeAuthenticationToken.getPrincipal();
         UserDetails user = userDetailsService.loadUserByUsername(principal);
         Optional.ofNullable(user).orElseThrow(() ->
                 new InternalAuthenticationServiceException("无法获取用户信息"));
 
         //如果获取到用户信息，那么重新构造一个SmsCodeAuthenticationToken
-
-        // ======================================================================
         //传入用户信息和用户权限
         SmsCodeAuthenticationToken authenticationResult = new SmsCodeAuthenticationToken(user,
                 user.getAuthorities());
@@ -40,6 +42,11 @@ public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
         return authenticationResult;
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see AuthenticationProvider#supports(java.lang.Class)
+     */
     @Override
     public boolean supports(Class<?> authentication) {
         //判断传进来的authentication 是不是SmsAuthentication

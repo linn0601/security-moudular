@@ -3,6 +3,7 @@ package org.linn;
 import org.linn.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import org.linn.constants.SecurityConstants;
 import org.linn.properties.SecurityProperties;
+import org.linn.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +26,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
     @Autowired
     private SecurityProperties securityProperties;
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -35,6 +38,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)
                 .successHandler(successHandler)
                 .failureHandler(failureHandler);
+
         // ==========================================================================================
 
         //应用多个SecurityConfig配置
@@ -49,8 +53,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
                         securityProperties.getBrowser().getLoginPage(),
                         securityProperties.getBrowser().getRegisterPage(),
-                        securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                        "/oauth/authorize"
+                        securityProperties.getBrowser().getSession().getSessionInvalidUrl()
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()

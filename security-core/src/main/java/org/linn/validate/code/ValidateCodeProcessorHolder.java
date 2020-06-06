@@ -1,6 +1,7 @@
 package org.linn.validate.code;
 
 import lombok.RequiredArgsConstructor;
+import org.linn.authentication.exception.ValidateCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,10 @@
 package org.linn.validate.code;
 
+import cn.hutool.core.exceptions.ValidateException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.linn.authentication.exception.ValidateCodeException;
 import org.linn.constants.SecurityConstants;
 import org.linn.properties.SecurityProperties;
 import org.springframework.beans.factory.InitializingBean;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -87,13 +90,15 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         if (type != null) {
             log.info("校验请求(" + request.getRequestURI() + ")中的验证码,验证码类型" + type);
             try {
-                validateCodeProcessorHolder.findValidateCodeProcessor(type);
+                validateCodeProcessorHolder.findValidateCodeProcessor(type).validate(new ServletWebRequest(request,response));
                 log.info("验证码校验通过");
                 //validate(new ServletWebRequest(request));
             } catch (ValidateCodeException e) {
                 //捕获到验证码验证验证异常使用自定义登录失败处理类
                 authenticationFailureHandler.onAuthenticationFailure(request, response, e);
                 return;
+            } catch (Exception e) {
+                throw new ValidateException("doFilterInternal出现预期以外的错误");
             }
         }
         filterChain.doFilter(request, response);
