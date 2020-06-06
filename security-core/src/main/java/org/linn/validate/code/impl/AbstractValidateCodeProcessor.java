@@ -78,9 +78,7 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
     public void validate(ServletWebRequest request) throws ServletRequestBindingException {
         //枚举类中定义抽象方法，
         ValidateCodeType codeType = getValidateCodeType(request);
-        //String key = this.getSessionKey(request);
-        //T codeInSession = (T) httpSession.getAttribute(key);
-        T codeInSession = (T) validateCodeRepository.get(request, codeType);
+        T validateCode = (T) validateCodeRepository.get(request, codeType);
         String codeInRequest;
         try {
             codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), codeType.getParamNameOnValidate());
@@ -90,18 +88,16 @@ public abstract class AbstractValidateCodeProcessor<T extends ValidateCode> impl
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException("验证码不能为空");
         }
-        if (codeInSession == null) {
+        if (validateCode == null) {
             throw new ValidateCodeException("验证码不存在");
         }
-        if (codeInSession.isExpire()) {
-            //httpSession.removeAttribute(key);
+        if (validateCode.isExpire()) {
             validateCodeRepository.remove(request, codeType);
             throw new ValidateCodeException("验证码已过期");
         }
-        if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
+        if (!StringUtils.equals(validateCode.getCode(), codeInRequest)) {
             throw new ValidateCodeException("验证码不匹配");
         }
-        //httpSession.removeAttribute(key);
         validateCodeRepository.remove(request, codeType);
     }
 

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+@Component("successHandler")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {

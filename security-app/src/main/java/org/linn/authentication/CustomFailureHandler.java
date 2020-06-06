@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * 失败处理器
  */
-@Component
+@Component("failureHandler")
 public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Autowired
