@@ -3,11 +3,16 @@ package org.linn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+
+import javax.annotation.Resource;
 
 /**
  * 认证服务器
@@ -19,10 +24,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserDetailsService myUserDetailsService;
 
+    @Resource
+    private TokenStore tokenStore;
+
+    @Autowired(required = false)
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
+
+    /**
+     * 密码模式必须要加入一个authenticationManager
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager);
+        endpoints.authenticationManager(authenticationManager)
+                .userDetailsService(myUserDetailsService)
+                .tokenStore(tokenStore);
+        if (null  != jwtAccessTokenConverter){
+            endpoints.accessTokenConverter(jwtAccessTokenConverter);
+        }
     }
 
     @Override
@@ -31,9 +52,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("test")
                 .secret(new BCryptPasswordEncoder().encode("test1234"))
                 .accessTokenValiditySeconds(36000)//有效时间
-                .refreshTokenValiditySeconds(3600*2)
+                .refreshTokenValiditySeconds(3600 * 2)
                 .redirectUris("http://www.baidu.com")//http://example.com
-                .authorizedGrantTypes("authorization_code","password","refresh_token")
+                .authorizedGrantTypes("authorization_code", "password", "refresh_token")
                 .scopes("all");
     }
 

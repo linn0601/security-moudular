@@ -55,6 +55,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+
     @PostMapping("/upload")
     public void updateLoad(MultipartFile file) throws IOException {
         String folder = "D:" + File.separator + "floder" + File.separator + file.getOriginalFilename();

@@ -1,5 +1,6 @@
 package org.linn;
 
+import lombok.extern.slf4j.Slf4j;
 import org.linn.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import org.linn.constants.SecurityConstants;
 import org.linn.properties.SecurityProperties;
@@ -16,6 +17,7 @@ import static org.linn.constants.SecurityConstants.*;
 
 @Configuration
 @EnableResourceServer
+@Slf4j
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired

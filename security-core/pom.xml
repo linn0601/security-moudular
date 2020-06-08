@@ -64,7 +64,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
         </dependency>
-
         <!-- spring social -->
         <dependency>
             <groupId>org.springframework.social</groupId>
