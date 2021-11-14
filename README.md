@@ -23,13 +23,13 @@
     可以使用spring中依赖查找，spring会将他们封装成Map
  ==>  private final Map<String, ValidateCodeGenerator> validateCodeGenerators;
 
-- 7.ServletRequestUtils.getRequiredStringParameter工具类可以从请求参数中查找，如果没有找到就抛出异常    
+-7.ServletRequestUtils.getRequiredStringParameter工具类可以从请求参数中查找，如果没有找到就抛出异常    
 
 -8.security-core 对验证码 图片|手机验证 进行分层封装系统可能发生的变化。
 
 -总的来说:
-
-- ===>基于security5.2对 oauth2颁发token移植到手机登录中,按照security对oauth2的实现自己造轮子并进行了整体的封装,代码复用上提高.
-- ===>使用@ConditionOnMissBean对许多功能都可以重写(开闭原则)
-- ===>模块化,支持json和session,对token加入redis/jwt支持
-
+···
+-- security5.2对 oauth2颁发token移植到手机登录中,按照security对oauth2的实现自己造轮子并进行了整体的封装,代码复用上提高.
+-- 使用@ConditionOnMissBean对许多功能都可以重写(开闭原则)
+-- 模块化,支持json和session,对token加入redis/jwt支持
+···
